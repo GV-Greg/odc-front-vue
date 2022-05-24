@@ -19,13 +19,61 @@ const router = createRouter({
             component: () => import('../views/auth/RegisterView.vue')
         },
         {
-            path: '/app',
+            path: '/app/',
             name: 'home',
             components: {
-                Nav: () => import('../components/Nav.vue'),
-                default: () => import('../views/HomeView.vue')
-            }
-        }
+                Nav: () => import('../components/NavBar.vue'),
+                default: () => import('../views/HomeView.vue'),
+            },
+        },
+        {
+            path: '/app/anim',
+            name: 'animation',
+            components: {
+                Nav: () => import('../components/NavBar.vue'),
+                default: () => import('../views/modules/animation/MainAnimation.vue'),
+            },
+        },
+        {
+            path: '/app/eco',
+            name: 'economy',
+            components: {
+                Nav: () => import('../components/NavBar.vue'),
+                default: () => import('../views/modules/economy/MainEconomy.vue'),
+            },
+        },
+        {
+            path: '/app/secu',
+            name: 'security',
+            components: {
+                Nav: () => import('../components/NavBar.vue'),
+                default: () => import('../views/modules/security/MainSecurity.vue'),
+            },
+        },
+        {
+            path: '/app/company',
+            name: 'company',
+            components: {
+                Nav: () => import('../components/NavBar.vue'),
+                default: () => import('../views/modules/company/MainCompany.vue'),
+            },
+        },
+        {
+            path: '/app/festival',
+            name: 'festival',
+            components: {
+                Nav: () => import('../components/NavBar.vue'),
+                default: () => import('../views/modules/festival/MainFestival.vue'),
+            },
+        },
+        {
+            path: '/app/profil',
+            name: 'profil',
+            components: {
+                Nav: () => import('../components/NavBar.vue'),
+                default: () => import('../views/auth/ProfilView.vue'),
+            },
+        },
     ]
 })
 

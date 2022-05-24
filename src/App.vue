@@ -12,11 +12,15 @@
 @import './assets/style.css';
 
 #app {
-  max-width: 1280px;
+  width: 100vw;
   height: 100vh;
+  padding: 0;
   margin: 0 auto;
-  padding: 0 2rem;
   font-weight: normal;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
 }
 
 header {

@@ -7,7 +7,7 @@ body {
 }
 
 h1 {
-    @apply my-2 font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-orange-400 to-red-600 align-middle;
+    @apply my-2 font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-orange-400 to-red-600;
 }
 
 h2 {
@@ -15,7 +15,7 @@ h2 {
 }
 
 h4 {
-    @apply mb-2 text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-red-600 to-orange-400 align-middle;
+    @apply mb-2 text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-red-600 to-orange-400;
 }
 
 table thead tr th {
