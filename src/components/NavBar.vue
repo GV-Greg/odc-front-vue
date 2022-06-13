@@ -1,10 +1,24 @@
 <script setup>
-import { RouterLink } from 'vue-router'
+/*
+ imports
+*/
+  import { RouterLink, useRouter } from 'vue-router'
+  import { useAuthStore } from "../stores/storeAuth"
+
+/*
+  logout
+*/
+  const authUser = useAuthStore()
+  const router = useRouter()
+  const logout =() => {
+    authUser.logout()
+    router.push('/')
+  }
 </script>
 
 <template>
   <header class="w-full mx-0 flex flex-col">
-    <div class="w-full bg-gradient-to-r from-blue-200 to-blue-100">
+    <div class="w-full bg-gradient-to-r from-blue-200 to-blue-100" v-show="authUser.isLoggedIn">
       <div class="flex items-center justify-end p-4">
         <nav class="space-x-6">
           <RouterLink to="/app/" class="no-underline font-semibold text-gray-800 hover:text-gray-600">
@@ -19,6 +33,9 @@ import { RouterLink } from 'vue-router'
           <a href='https://odc-admin.creacube.be' target="_blank" rel="noopener noreferrer" class="no-underline font-semibold text-gray-800 hover:text-gray-600">
             Admin
           </a>
+          <button class="no-underline btn-danger" @click="logout">
+            Déconnexion
+          </button>
         </nav>
       </div>
     </div>

@@ -1,4 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import WelcomeView from '../views/WelcomeView.vue'
+import LoginView from '../views/auth/LoginView.vue'
+import RegisterView from '../views/auth/RegisterView.vue'
+
+// lazy-loaded
+const Nav = () => import('../components/NavBar.vue')
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -6,23 +12,23 @@ const router = createRouter({
         {
             path: '/',
             name: 'welcome',
-            component: () => import('../views/WelcomeView.vue')
+            component: WelcomeView
         },
         {
             path: '/login',
             name: 'login',
-            component: () => import('../views/auth/LoginView.vue')
+            component: LoginView
         },
         {
             path: '/register',
             name: 'register',
-            component: () => import('../views/auth/RegisterView.vue')
+            component: RegisterView
         },
         {
             path: '/app/',
             name: 'home',
             components: {
-                Nav: () => import('../components/NavBar.vue'),
+                Nav,
                 default: () => import('../views/HomeView.vue'),
             },
         },
@@ -30,7 +36,7 @@ const router = createRouter({
             path: '/app/anim',
             name: 'animation',
             components: {
-                Nav: () => import('../components/NavBar.vue'),
+                Nav,
                 default: () => import('../views/modules/animation/MainAnimation.vue'),
             },
         },
@@ -38,7 +44,7 @@ const router = createRouter({
             path: '/app/eco',
             name: 'economy',
             components: {
-                Nav: () => import('../components/NavBar.vue'),
+                Nav,
                 default: () => import('../views/modules/economy/MainEconomy.vue'),
             },
         },
@@ -46,7 +52,7 @@ const router = createRouter({
             path: '/app/secu',
             name: 'security',
             components: {
-                Nav: () => import('../components/NavBar.vue'),
+                Nav,
                 default: () => import('../views/modules/security/MainSecurity.vue'),
             },
         },
@@ -54,7 +60,7 @@ const router = createRouter({
             path: '/app/company',
             name: 'company',
             components: {
-                Nav: () => import('../components/NavBar.vue'),
+                Nav,
                 default: () => import('../views/modules/company/MainCompany.vue'),
             },
         },
@@ -62,7 +68,7 @@ const router = createRouter({
             path: '/app/festival',
             name: 'festival',
             components: {
-                Nav: () => import('../components/NavBar.vue'),
+                Nav,
                 default: () => import('../views/modules/festival/MainFestival.vue'),
             },
         },
@@ -70,7 +76,7 @@ const router = createRouter({
             path: '/app/profil',
             name: 'profil',
             components: {
-                Nav: () => import('../components/NavBar.vue'),
+                Nav,
                 default: () => import('../views/auth/ProfilView.vue'),
             },
         },

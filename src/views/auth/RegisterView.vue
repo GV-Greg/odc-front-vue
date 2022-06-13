@@ -1,5 +1,51 @@
 <script setup>
-  import { RouterLink } from 'vue-router'
+/*
+  imports
+*/
+  import { reactive } from 'vue'
+  import { RouterLink, useRouter } from 'vue-router'
+  import InputText from "../../components/forms/InputText.vue"
+  import InputEmail from "../../components/forms/InputEmail.vue"
+  import InputPassword from "../../components/forms/InputPassword.vue"
+  import InputConfirm from "../../components/forms/InputConfirm.vue"
+  import DefaultSubmitButton from "../../components/buttons/DefaultSubmitButton.vue"
+  import validation from "../../modules/SubmitValidator";
+  import { useAuthStore } from "../../stores/storeAuth";
+  import Toast from "../../directives/toast";
+
+/*
+  form data
+*/
+  let user = reactive({
+    username: "",
+    email: "",
+    password: "",
+    confirmation: "",
+  })
+
+/*
+  submit form
+*/
+  const router = useRouter()
+  const authStore = useAuthStore()
+
+  const register = async () => {
+    if(validation(!user.username || !user.email || !user.password || !user.confirmation, "Vous n'avez pas rempli les champs requis !")) {
+    } else if(validation(user.username.length > 190, "Le pseudo doit contenir - de 190 caractères !")) {
+    } else if(validation(user.email.length > 190, "L'email doit contenir - de 190 caractères !")) {
+    } else if(validation(user.password.length < 8, "Le mot de passe doit contenir + de 8 caractères !")) {
+    } else if(validation(user.password.length > 190, "Le mot de passe doit contenir - de 190 caractères !")) {
+    } else if(validation(user.password !== user.confirmation, "La confirmation du mot de passe n'est pas identique à celui-ci !")) {
+    } else {
+      authStore.register(user)
+          .then(response => {
+            router.push('/app/')
+          })
+          .catch(error => {
+            Toast(350,'error', 'top-right', error.response.data.message)
+          })
+    }
+  }
 </script>
 
 <template>
@@ -17,30 +63,13 @@
       <div class="w-11/12 laptop:w-12/12 my-2 pb-2 bg-gray-200 flex flex-col items-center justify-center border-2 border-gray-300 border-dashed rounded-xl">
         <div class="w-full mt-2 md:mt-3 px-7 overflow-y-auto">
           <h2>Cr&eacute;ation votre compte</h2>
-          <form class="mb-2" onSubmit={register}>
-            <div class="form-group">
-              <label for="pseudo" class="form-label">Pseudo</label>
-              <input type="text" name="pseudo" value={pseudo} onChange={onInputChange} class="form-field" />
-              <span class="form-error">{errors.pseudo}</span>
-            </div>
-            <div class="form-group mt-3">
-              <label for="email" class="form-label">Email</label>
-              <input type="text" name="email" value={email} onChange={onInputChange} class="form-field" />
-              <span class="form-error">{errors.email}</span>
-            </div>
-            <div class="form-group mt-3">
-              <label for="password" class="form-label">Mot de passe</label>
-              <input type="password" name="password" value={password} onChange={onInputChange} class="form-field" />
-              <span class="form-error">{errors.password}</span>
-            </div>
-            <div class="form-group mt-3">
-              <label for="confirmation" class="form-label">Confirmation mot de passe</label>
-              <input type="password" name="confirmation" value={confirmation} onChange={onInputChange} class="form-field" />
-              <span class="form-error">{errors.confirmation}</span>
-            </div>
-            <div class="form-group mt-4">
-              <button type="submit" class="btn-auth py-2 uppercase">S'enregistrer</button>
-            </div>
+          <form class="mb-2" v-on:submit.prevent="register">
+            <InputText v-model="user.username" name="username" label="pseudo" placeholder="Entrez votre pseudo" />
+            <InputEmail v-model="user.email" name="email" label="email" placeholder="Entrez votre email" />
+            <InputPassword v-model="user.password" name="password" label="mot de passe" placeholder="Entrez votre mot de passe"/>
+            <InputConfirm v-model="user.confirmation" confirmField="password" :confirmValue="user.password"
+                          name="confirmation" label="confirmation mot de passe" placeholder="Confirmez votre mot de passe"/>
+            <DefaultSubmitButton text="S'enregistrer" />
           </form>
         </div>
       </div>

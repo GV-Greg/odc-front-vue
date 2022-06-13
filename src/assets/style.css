@@ -18,6 +18,10 @@ h4 {
     @apply mb-2 text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-red-600 to-orange-400;
 }
 
+.main {
+    @apply mx-5 mb-5 p-5 bg-gray-200 w-11/12 h-full flex flex-col items-center justify-center border-2 border-gray-300 border-dashed rounded-3xl;
+}
+
 table thead tr th {
     @apply p-3 text-xs uppercase whitespace-nowrap font-extrabold text-left;
 }
@@ -34,7 +38,11 @@ table tbody tr th, table tbody tr td {
     @apply font-bold text-lg rounded px-3 text-white ring-4 ring-offset-4;
 }
 
-.btn-auth {
+.btn-default:disabled {
+    @apply font-bold text-lg rounded px-3 text-white bg-blue-600;
+}
+
+.btn-default {
     @apply font-bold text-lg rounded px-3 text-white bg-blue-600 hover:bg-blue-800 transform hover:translate-y-px hover:translate-x-px;
 }
 
@@ -50,6 +58,10 @@ table tbody tr th, table tbody tr td {
     @apply ml-2 font-bold text-lg rounded px-3 text-white bg-green-500;
 }
 
+.btn-danger {
+    @apply font-semibold bg-red-600 p-2 text-gray-200 rounded-lg hover:text-gray-200 hover:bg-red-800 transform hover:translate-y-px hover:translate-x-px;
+}
+
 .form-group {
     @apply mb-3 flex flex-col;
 }
@@ -58,10 +70,46 @@ table tbody tr th, table tbody tr td {
     @apply mb-1 uppercase font-bold text-slate-500;
 }
 
+.form-field, .form-field-error {
+    @apply p-2 rounded-md text-gray-800;
+}
+
 .form-field {
-    @apply p-2 border border-slate-500 rounded-md;
+    @apply border border-slate-500;
+}
+
+.form-field-error {
+    @apply border-2 border-red-500;
 }
 
 .form-error {
-    @apply text-red-600 text-sm;
+    @apply text-red-600 text-sm ml-2;
+}
+
+#modal-container {
+    position: initial;
+}
+
+.colored-toast.swal2-icon-success {
+    background-color: #6ba948 !important;
+}
+
+.colored-toast.swal2-icon-error {
+    background-color: #d04a4a !important;
+}
+
+.colored-toast.swal2-icon-warning {
+    background-color: #c78348 !important;
+}
+
+.colored-toast.swal2-icon-info {
+    background-color: #1090b9 !important;
+}
+
+.colored-toast.swal2-icon-question {
+    background-color: #426e81 !important;
+}
+
+.colored-toast .swal2-title, .colored-toast .swal2-close, .colored-toast .swal2-html-container {
+    color: white;
 }

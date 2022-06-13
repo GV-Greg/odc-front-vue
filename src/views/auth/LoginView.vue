@@ -1,5 +1,47 @@
 <script setup>
-  import { RouterLink } from 'vue-router'
+/*
+  imports
+*/
+  import { reactive, ref } from 'vue'
+  import { RouterLink, useRouter } from 'vue-router'
+  import InputText from '../../components/forms/InputText.vue'
+  import InputPassword from '../../components/forms/InputPassword.vue'
+  import DefaultSubmitButton from '../../components/buttons/DefaultSubmitButton.vue'
+  import useSubmitButtonState from '../../use/useSubmitButtonState'
+  import useFormValidation from '../../use/useFormValidation';
+  import { useAuthStore } from '../../stores/storeAuth'
+  import validation from '../../modules/SubmitValidator'
+  import Toast from '../../directives/toast'
+
+/*
+  form data
+*/
+  let user = reactive({
+    username: '',
+    password: '',
+  })
+
+/*
+  submit form
+*/
+  const router = useRouter()
+  const authStore = useAuthStore()
+
+  const connect = () => {
+    if(validation(!user.username || !user.password, "Vous n'avez pas rempli les champs requis !")) {
+    } else if(validation(user.username.length > 190, "Le pseudo doit contenir - de 190 caractères !")) {
+    } else if(validation(user.password.length < 8, "Le mot de passe doit contenir + de 8 caractères !")) {
+    } else if(validation(user.password.length > 190, "Le mot de passe doit contenir - de 190 caractères !")) {
+    } else {
+      authStore.login(user)
+          .then(() => {
+            router.push('/app/')
+          })
+          .catch(error => {
+            Toast(350, 'error', 'top-right', error.response.data.message)
+          })
+    }
+  }
 </script>
 
 <template>
@@ -14,20 +56,10 @@
       <div class="w-11/12 laptop:w-12/12 my-5 bg-gray-200 flex flex-col items-center justify-center border-2 border-gray-300 border-dashed rounded-xl">
         <div class="w-full mt-2 md:mt-5 px-7 overflow-y-auto">
           <h2>Connectez-vous</h2>
-          <form class="mt-6" onSubmit={connect}>
-            <div class="form-group">
-              <label for="pseudo" class="form-label">Pseudo</label>
-              <input type="text" name="pseudo" value={pseudo} onChange={onInputChange} class="form-field" />
-              <span class="form-error">{errors.pseudo}</span>
-            </div>
-            <div class="form-group mt-5">
-              <label for="password" class="form-label">Mot de passe</label>
-              <input type="password" name="password" value={password} onChange={onInputChange} class="form-field" />
-              <span class="form-error">{errors.password}</span>
-            </div>
-            <div class="form-group mt-10">
-              <button type="submit" class="btn-auth py-2 uppercase">Se connecter</button>
-            </div>
+          <form class="mt-6" v-on:submit.prevent="connect">
+            <InputText v-model="user.username" name="username" label="pseudo" placeholder="Entrez votre pseudo" />
+            <InputPassword v-model="user.password" name="password" label="mot de passe" placeholder="Entrez votre mot de passe" />
+            <DefaultSubmitButton text="Se connecter" />
           </form>
           <div class="my-5 flex flex-col laptop:flex-row justify-center text-center">
             <span class="text-base text-gray-500">

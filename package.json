@@ -1,6 +1,6 @@
 {
   "name": "odc-front-vue",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -8,13 +8,17 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@vueuse/core": "^8.5.0",
+    "axios": "^0.27.2",
     "oh-vue-icons": "^1.0.0-rc3",
+    "pinia": "^2.0.14",
     "vue": "^3.2.33",
+    "vue-i18n": "^9.1.10",
     "vue-router": "^4.0.15",
-    "vue-sweetalert2": "^5.0.5",
-    "vuex": "^4.0.2"
+    "vue-sweetalert2": "^5.0.5"
   },
   "devDependencies": {
+    "@intlify/vite-plugin-vue-i18n": "^3.4.0",
     "@vitejs/plugin-vue": "^2.3.1",
     "autoprefixer": "^10.4.7",
     "eslint": "^8.15.0",
