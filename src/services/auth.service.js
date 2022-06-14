@@ -1,4 +1,5 @@
-import http from "../http-common.js";
+import { http } from "../http-common.js";
+import authHeader from './auth-header.js';
 
 class AuthService {
     register(user) {
@@ -9,8 +10,7 @@ class AuthService {
             confirmation: user.confirmation
         }).then(response => {
             if(response.data.success === true) {
-                localStorage.setItem('auth_username', JSON.stringify(response.data.data.username));
-                localStorage.setItem('auth_token', JSON.stringify(response.data.data.token));
+                localStorage.setItem('auth_is_validated', 'false');
             }
             return response.data
         })
@@ -24,14 +24,32 @@ class AuthService {
             if(response.data.success === true) {
                 localStorage.setItem('auth_username', JSON.stringify(response.data.data.username));
                 localStorage.setItem('auth_token', JSON.stringify(response.data.data.token));
+                localStorage.removeItem('auth_is_validated');
             }
             return response.data
         })
     }
 
-    logout() {
-        localStorage.removeItem('auth_token');
-        localStorage.removeItem('auth_username');
+    logout(user) {
+        return http.post('logout', {
+            username: user.username,
+        }, {
+            headers: authHeader()
+        }).then(response => {
+            if(response.data.success === true) {
+                localStorage.removeItem('auth_token');
+                localStorage.removeItem('auth_username');
+            }
+            return response.data
+        })
+    }
+
+    check(user) {
+        return http.get('check-auth/' + user, {
+            headers: authHeader()
+        }).then(response => {
+            return response.data
+        })
     }
 }
 

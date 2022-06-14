@@ -7,7 +7,7 @@ import RegisterView from '../views/auth/RegisterView.vue'
 const Nav = () => import('../components/NavBar.vue')
 
 const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
+    history: createWebHistory(),
     routes: [
         {
             path: '/',

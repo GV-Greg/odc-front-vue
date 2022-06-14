@@ -18,6 +18,10 @@ import {
     GiSwordsEmblem,
     GiRollingDiceCup,
     GiBarbute,
+    GiBugleCall,
+    GiAnchor,
+    RiHomeGearLine,
+    FaPowerOff
 } from "oh-vue-icons/icons"
 
 addIcons(
@@ -29,6 +33,10 @@ addIcons(
     GiSwordsEmblem,
     GiRollingDiceCup,
     GiBarbute,
+    GiBugleCall,
+    GiAnchor,
+    RiHomeGearLine,
+    FaPowerOff
 )
 
 import en from '@/locales/en.json'

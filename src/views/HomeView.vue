@@ -9,7 +9,6 @@
   User data
 */
   const authUser = useAuthStore()
-  console.log(authUser.getUsername)
 </script>
 
 <template>
@@ -20,3 +19,13 @@
     <NavMenu />
   </main>
 </template>
+
+<style scoped>
+  h2 {
+    @apply font-normal
+  }
+
+  .username {
+    @apply font-bold
+  }
+</style>

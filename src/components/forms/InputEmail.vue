@@ -43,7 +43,7 @@
 <template>
   <div class="form-group">
     <label :for="name" class="form-label">{{ label }}</label>
-    <input type="email" v-model="modelValue" :name="name" :placeholder="placeholder"
+    <input type="email" :value="modelValue" :name="name" :placeholder="placeholder" v-bind="$attrs"
            :class="{ 'form-field-error' : errors[props.name], 'form-field' : !errors[props.name] }"
            @keyup="validateInput" @blur="validateInput"
            @input="$emit('update:modelValue', $event.target.value)" />

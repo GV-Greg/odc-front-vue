@@ -38,11 +38,11 @@
     } else if(validation(user.password !== user.confirmation, "La confirmation du mot de passe n'est pas identique à celui-ci !")) {
     } else {
       authStore.register(user)
-          .then(response => {
-            router.push('/app/')
+          .then(() => {
+            router.push('/login/')
           })
           .catch(error => {
-            Toast(350,'error', 'top-right', error.response.data.message)
+            Toast(400,'error', 'top-right', error.response.data.message)
           })
     }
   }

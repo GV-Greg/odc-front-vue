@@ -36,7 +36,6 @@
     }
   })
 
-
 /*
   Validations
 */
@@ -53,10 +52,10 @@
 <template>
   <div class="form-group">
     <label :for="name" class="form-label">{{ label }}</label>
-    <input type="text" v-model="modelValue" :name="name" :placeholder="placeholder"
+    <input type="text" :value="modelValue" :name="name" :placeholder="placeholder"
            :class="{ 'form-field-error' : errors[props.name], 'form-field' : !errors[props.name] }"
            @keyup="validateInput" @blur="validateInput"
-           @input="$emit('update:modelValue', modelValue)" />
+           @input="$emit('update:modelValue', $event.target.value)" />
     <span class="form-error" v-show="errors[props.name]">{{ errors[props.name] }}</span>
   </div>
 </template>
