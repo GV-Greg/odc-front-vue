@@ -1,11 +1,9 @@
 <script setup>
-import { RouterLink } from 'vue-router'
+  import { RouterView } from 'vue-router'
 </script>
 
 <template>
   <main class="main md:w-3/4">
-    <div class="overflow-y-auto flex flex-col flex-grow">
-      <h2>FaSi Fest</h2>
-    </div>
+      <RouterView />
   </main>
 </template>

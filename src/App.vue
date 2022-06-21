@@ -3,7 +3,30 @@
   imports
 */
   import { RouterView } from 'vue-router'
+  import { useRouter } from 'vue-router'
+  import { onMounted } from 'vue'
+  import UserService from './services/user.service.js';
+  import { useAuthStore } from "./stores/storeAuth";
 
+  const router = useRouter()
+  const authStore = useAuthStore()
+  const user = JSON.parse(localStorage.getItem('auth_username'));
+
+  onMounted(async() => {
+    if(user) {
+      await UserService.check(user).then((response) => {
+        if(response.success === true) {
+          authStore.setUsername(response.data.user)
+          authStore.setIsLoggedIn(true)
+          authStore.setRoles(response.data.roles)
+        } else {
+          authStore.setUsername(null)
+          authStore.setIsLoggedIn(false)
+          authStore.setRoles([])
+        }
+      })
+    }
+  })
 </script>
 
 <template>

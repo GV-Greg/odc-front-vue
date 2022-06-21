@@ -11,7 +11,7 @@ h1 {
 }
 
 h2 {
-    @apply mt-2 mb-3 text-center text-3xl font-bold text-blue-600;
+    @apply mt-2 mb-3 text-center text-3xl font-bold text-blue-800;
 }
 
 h4 {
@@ -19,7 +19,11 @@ h4 {
 }
 
 .main {
-    @apply mx-5 mb-5 p-5 bg-gray-200 w-11/12 h-full flex flex-col items-center justify-center border-2 border-gray-300 border-dashed rounded-3xl;
+    @apply mx-5 mb-5 p-5 bg-gray-200 w-11/12 h-full flex flex-col items-center justify-center border-2 border-gray-300 border-dashed rounded-3xl text-slate-800;
+}
+
+p {
+    @apply text-slate-800;
 }
 
 table thead tr th {
@@ -111,5 +115,52 @@ table tbody tr th, table tbody tr td {
 }
 
 .colored-toast .swal2-title, .colored-toast .swal2-close, .colored-toast .swal2-html-container {
-    color: white;
+    @apply text-white;
+}
+
+/* Card des activités pour l'animation */
+.card-anim {
+    @apply cursor-pointer w-32 h-32 px-1 py-1 flex flex-col justify-center items-center bg-slate-700 hover:bg-slate-800 text-center text-slate-100 shadow-md shadow-slate-500 border border-4 border-slate-700 rounded-2xl transform hover:translate-y-0.5 hover:translate-x-0.5 transition ease-in-out duration-150;
+}
+
+.card-anim-title {
+    @apply text-slate-100 font-bold mt-2;
+}
+
+/* Animation - Grille de lots */
+.line-grid-rewards {
+    @apply flex;
+}
+
+.box-grid-rewards-inside {
+    @apply w-9 h-9 justify-center pt-1.5 bg-slate-800 text-center text-slate-50;
+}
+
+.box-grid-rewards-inside-is-taken {
+    @apply w-9 h-9 justify-center pt-1.5 bg-red-800 text-center text-slate-50;
+}
+
+/* Animation - Course de poussins */
+.line-race-chicks {
+    @apply flex justify-evenly border-t border-opacity-50 border-blue-600;
+}
+
+.box-race-chick {
+    @apply w-full h-5 border-l border-opacity-50 border-blue-600;
+}
+
+.cell-race-chick {
+    @apply w-full h-5 flex justify-end items-center pr-2 text-slate-500 text-right border-l border-opacity-50 border-blue-600
+}
+
+.line-race-chick .box-race-chick:last-child {
+    @apply border-r;
+}
+
+.tooltip-box-race-chick {
+    @apply relative;
+}
+
+.tooltip-race-chick {
+    @apply absolute z-10 w-20 mt-1 bg-slate-900 text-xs text-slate-100 text-center px-1.5 rounded bg-opacity-70 shadow-xl -left-7
 }

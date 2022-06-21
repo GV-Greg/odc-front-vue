@@ -21,7 +21,12 @@ import {
     GiBugleCall,
     GiAnchor,
     RiHomeGearLine,
-    FaPowerOff
+    FaPowerOff,
+    GiTrophyCup,
+    RiLockPasswordFill,
+    FaKiwiBird,
+    FaReply,
+    FaUnlockAlt
 } from "oh-vue-icons/icons"
 
 addIcons(
@@ -36,7 +41,12 @@ addIcons(
     GiBugleCall,
     GiAnchor,
     RiHomeGearLine,
-    FaPowerOff
+    FaPowerOff,
+    GiTrophyCup,
+    RiLockPasswordFill,
+    FaKiwiBird,
+    FaReply,
+    FaUnlockAlt
 )
 
 import en from '@/locales/en.json'
@@ -63,12 +73,5 @@ app.use(router)
 app.use(i18n)
 app.use(VueSweetalert2, options)
 app.component("v-icon", OhVueIcon)
-
-// get the store
-const store = useAuthStore()
 window.Swal =  app.config.globalProperties.$swal
-// initialize auth listener to see if we have a user at startup
-store.initializeAuth().then(() => {
-    app.mount('#app')
-})
-
+app.mount('#app')

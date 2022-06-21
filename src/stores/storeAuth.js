@@ -6,59 +6,64 @@ const user = JSON.parse(localStorage.getItem('auth_username'));
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
-        user: {
-            status: {
-                loggedIn: false
-            },
-            username: null,
-            roles: []
-        }
+        isLoggedIn: !!localStorage.getItem('auth_username'),
+        username: null,
+        roles: []
     }),
     getters: {
-        getUsername: (state) => {
-            return state.user.username
+        getIsLoggedIn: (state) => {
+            return state.isLoggedIn
         },
-        isLoggedIn: (state) => {
-            return state.user.status.loggedIn
+        getUsername: (state) => {
+            return state.username
         },
         getRoles: (state) => {
-            return state.user.roles
+            return state.roles
         },
         isAdmin: (state) => {
-            return state.user.roles.includes("Admin")
+            return state.roles.includes("Admin")
         }
     },
     actions: {
-        initializeAuth() {
-            return new Promise((resolve) => {
-                if(user) {
-                    this.user.status.loggedIn = true
-                    this.user.username = user
-                    AuthService.check(user)
-                        .then(response => {
-                            if(response.success === true) {
-                                this.user.roles = response.data.roles
-                            }
-                        })
-                } else {
-                    this.user.status.loggedIn = false
-                    this.user.username = null
-                }
-                resolve(true)
-            })
+        setIsLoggedIn(boolean) {
+            this.isLoggedIn = boolean
         },
+        setUsername(user) {
+            this.username = user;
+        },
+        setRoles(roles) {
+            this.roles = roles;
+        },
+        // initializeAuth() {
+        //     return new Promise((resolve) => {
+        //         if(user) {
+        //             this.user.status.loggedIn = true
+        //             this.user.username = user
+        //             AuthService.check(user)
+        //                 .then(response => {
+        //                     if(response.success === true) {
+        //                         this.user.roles = response.data.roles
+        //                     }
+        //                 })
+        //         } else {
+        //             this.user.status.loggedIn = false
+        //             this.user.username = null
+        //         }
+        //         resolve(true)
+        //     })
+        // },
         async register(user) {
             await AuthService.register(user)
                 .then(response => {
                     if(response.success === true) {
-                        this.user.username = response.data.username
-                        this.user.status.loggedIn = true
+                        this.username = response.data.username
+                        this.isLoggedIn = true
                         Toast(350,'success', 'top-right', response.message)
                     }
                 })
                 .catch(error => {
-                    this.user.status.loggedIn = false
-                    this.user.username = null
+                    this.isLoggedIn = false
+                    this.username = null
                     return Promise.reject(error);
                 })
         },
@@ -66,30 +71,29 @@ export const useAuthStore = defineStore('auth', {
             await AuthService.login(user)
                 .then(response => {
                     if(response.success === true) {
-                        this.user.username = response.data.username
-                        this.user.status.loggedIn = true
-                        this.user.roles = response.data.roles
+                        this.username = response.data.username
+                        this.isLoggedIn = true
+                        this.roles = response.data.roles
                         Toast(350,'success', 'top', response.message)
                     }
                 })
                 .catch(error => {
-                    this.user.status.loggedIn = false
-                    this.user.username = null
+                    this.isLoggedIn = false
+                    this.username = null
                     return Promise.reject(error);
                 })
         },
-        async logout() {
-            await AuthService.logout(this.user)
+        async logout(user) {
+            await AuthService.logout(user)
                 .then(response => {
                     if(response.success === true) {
-                        this.user.status.loggedIn = false;
-                        this.user.username = null;
+                        this.isLoggedIn = false;
+                        this.username = null;
+                        this.roles = [];
                         Toast(350,'info', 'top-right', response.message)
                     }
                 })
                 .catch(error => {
-                    this.user.status.loggedIn = false
-                    this.user.username = null
                     return Promise.reject(error);
                 })
         },

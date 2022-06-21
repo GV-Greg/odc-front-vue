@@ -4,15 +4,16 @@
 */
   import { RouterLink, useRouter } from 'vue-router'
   import { useAuthStore } from "../stores/storeAuth"
-import Toast from "../directives/toast";
+  import Toast from "../directives/toast";
 
 /*
   logout
 */
   const authUser = useAuthStore()
   const router = useRouter()
+
   const logout =() => {
-    authUser.logout()
+    authUser.logout(authUser.getUsername)
         .then(() => {
           router.push('/')
         })
@@ -25,23 +26,23 @@ import Toast from "../directives/toast";
 
 <template>
   <header class="w-full mx-0 flex flex-col">
-    <div class="w-full bg-gradient-to-r from-blue-200 to-blue-100" v-show="authUser.isLoggedIn">
+    <div class="w-full bg-gradient-to-r from-blue-200 to-blue-100">
       <div class="flex items-center justify-end p-4">
         <nav class="w-full grid grid-cols-2 justify-items-stretch">
           <div class="space-x-3 justify-self-start flex items-center">
-            <RouterLink to="/app/profil" class="flex items-center rounded-lg pl-1.5 pr-3 py-0.5 no-underline font-semibold bg-slate-800 text-gray-200 hover:bg-blue-500 hover:text-slate-900">
-              <v-icon name="gi-barbute" scale="2" class="mr-1"/><span class="font-bold text-xl">{{ authUser.getUsername }}</span>
-            </RouterLink>
-            <RouterLink to="/app/" class="flex items-center rounded-lg pl-1.5 pr-3 py-0.5 no-underline font-semibold bg-slate-800 text-gray-200 hover:bg-blue-500 hover:text-slate-900">
+            <RouterLink :to="{ name: 'home' }" class="flex items-center rounded-lg pl-1.5 pr-3 py-0.5 no-underline font-semibold bg-slate-800 text-gray-200 hover:bg-blue-500 hover:text-slate-900">
               <v-icon name="gi-medieval-pavilion" scale="2" class="mr-1"/><span class="font-bold text-xl">Accueil</span>
+            </RouterLink>
+            <RouterLink :to="{ name: 'profil' }" v-show="authUser.getIsLoggedIn" class="flex items-center rounded-lg pl-1.5 pr-3 py-0.5 no-underline font-semibold bg-slate-800 text-gray-200 hover:bg-blue-500 hover:text-slate-900">
+              <v-icon name="gi-barbute" scale="2" class="mr-1"/><span class="font-bold text-xl">Profil</span>
             </RouterLink>
           </div>
           <div class="space-x-3 justify-self-end flex items-center">
-            <RouterLink to="festival" v-show="authUser.getRoles.includes('FaSi Fest') || authUser.isAdmin"
+            <RouterLink :to="{ name: 'festival-home' }"
                         class="flex items-center rounded-lg pl-1.5 pr-3 py-0.5 no-underline font-semibold bg-slate-800 text-gray-200 hover:bg-blue-500 hover:text-slate-900">
               <v-icon name="gi-bugle-call" scale="2" class="mr-1"/><span class="font-bold text-xl">FaSi Fest</span>
             </RouterLink>
-            <RouterLink to="company" v-show="authUser.getRoles.includes('Vit\'Art') || authUser.isAdmin"
+            <RouterLink :to="{ name: 'company' }" v-show="authUser.getRoles.includes('Company-Admin') || authUser.getRoles.includes('Company-Member') || authUser.isAdmin"
                         class="flex items-center rounded-lg pl-1.5 pr-3 py-0.5 no-underline font-semibold bg-slate-800 text-gray-200 hover:bg-blue-500 hover:text-slate-900">
               <v-icon name="gi-anchor" scale="2" class="mr-1"/><span class="font-bold text-xl">Vit'Art</span>
             </RouterLink>
@@ -49,7 +50,7 @@ import Toast from "../directives/toast";
                class="flex items-center rounded-lg pl-1.5 pr-3 py-0.5 no-underline font-semibold bg-slate-800 text-gray-200 hover:bg-blue-500 hover:text-slate-900">
               <v-icon name="ri-home-gear-line" scale="2" class="mr-1"/><span class="font-bold text-xl">Admin</span>
             </a>
-            <button class="flex items-center rounded-lg pl-1.5 pr-0.5 py-0.5 no-underline font-semibold bg-red-800 text-gray-200 hover:bg-red-600 hover:text-slate-900" @click="logout">
+            <button v-show="authUser.getIsLoggedIn" class="flex items-center rounded-lg pl-1.5 pr-0.5 py-0.5 no-underline font-semibold bg-red-800 text-gray-200 hover:bg-red-600 hover:text-slate-900" @click="logout">
               <v-icon name="fa-power-off" scale="2" class="mr-1"/>
             </button>
           </div>

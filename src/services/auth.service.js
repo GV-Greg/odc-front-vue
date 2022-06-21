@@ -1,5 +1,5 @@
-import { http } from "../http-common.js";
-import authHeader from './auth-header.js';
+import { http } from "../http-common.js"
+import authHeader from './auth-header.js'
 
 class AuthService {
     register(user) {
@@ -32,7 +32,7 @@ class AuthService {
 
     logout(user) {
         return http.post('logout', {
-            username: user.username,
+            username: user,
         }, {
             headers: authHeader()
         }).then(response => {
@@ -43,14 +43,6 @@ class AuthService {
             return response.data
         })
     }
-
-    check(user) {
-        return http.get('check-auth/' + user, {
-            headers: authHeader()
-        }).then(response => {
-            return response.data
-        })
-    }
 }
 
-export default new AuthService();
+export default new AuthService()

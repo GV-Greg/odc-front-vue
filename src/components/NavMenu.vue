@@ -2,13 +2,15 @@
 /*
   imports
 */
-  import { useAuthStore } from "../stores/storeAuth";
+  import { useAuthStore } from '../stores/storeAuth'
   import { RouterLink } from 'vue-router'
+  import { onBeforeMount, onMounted } from 'vue'
 
 /*
   User data
 */
   const authUser = useAuthStore()
+
 
 /*
   Menu items
