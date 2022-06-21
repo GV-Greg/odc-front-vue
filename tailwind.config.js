@@ -70,7 +70,16 @@ module.exports = {
       '225': '225deg',
       '270': '270deg',
     },
-    extend: {},
+    extend: {
+      gridTemplateColumns: {
+        // Simple 15 column grid
+        '15': 'repeat(15, minmax(0, 1fr))',
+      },
+      gridTemplateRows: {
+        // Simple 15 row grid
+        '15': 'repeat(15, minmax(0, 1fr))',
+      }
+    },
   },
   plugins: [],
 }
