@@ -3,7 +3,7 @@
  imports
 */
   import { RouterLink } from 'vue-router'
-  import { reactive, onBeforeMount } from 'vue'
+  import { reactive, onBeforeMount, ref } from 'vue'
   import AnimService from '../../../services/anim.service.js'
 
 /*
@@ -12,6 +12,7 @@
   const axeX = reactive({ x: 0 })
   const axeY = reactive({ y: 0 })
   const rewards = reactive({})
+  const rewardsPerPlayer = reactive({})
 
   onBeforeMount(async() => {
     await AnimService.gridRewards('FaSiFest').then((response) => {
@@ -19,9 +20,16 @@
         axeX.x = response.data.grid.width
         axeY.y = response.data.grid.height
         rewards.value = response.data.rewards
+        rewardsPerPlayer.value = response.data.rewardsPerPlayer
       }
     })
   })
+
+/*
+  Liste des récompenses
+*/
+
+  const typeList = ref(true)
 </script>
 
 <template>
@@ -38,6 +46,12 @@
           <div class="font-extrabold text-2xl -mt-2 uppercase">Grille des lots</div>
         </h2>
       </div>
+      <div class="justify-self-center mt-2">
+        <button @click="typeList = !typeList" class="btn btn-primary">
+          <span v-if="typeList">Liste des lots par personne</span>
+          <span v-else>Liste des lots</span>
+        </button>
+      </div>
     </div>
     <div class="mt-5 grid grid-cols-3">
       <div class="col-span-2 flex justify-center items-start">
@@ -49,7 +63,7 @@
           </div>
         </div>
       </div>
-      <div class="col-span-1">
+      <div class="col-span-1" v-if="typeList">
         <ul class="grid auto-rows-auto auto-cols-auto">
           <li v-for="reward in rewards.value" :key="reward.id">
             <span v-if="reward.is_taken === true">
@@ -57,6 +71,16 @@
             </span>
           </li>
         </ul>
+      </div>
+      <div class="col-span-1" v-else>
+        <div v-for="(player, index) in rewardsPerPlayer.value" :key="index" class="mb-2">
+          <span class="font-bold uppercase text-blue-500 text-lg">{{  player[0].player }}</span>
+          <ul class="ml-3">
+            <li v-for="(reward, index) in player" :key="index">
+              <v-icon name="gi-trophy-cup" scale="1"/>{{ reward.name }}
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
